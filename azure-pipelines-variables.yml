@@ -1,0 +1,4 @@
+variables:
+  azurecrName: pinscrsharedtoolinguks
+  resourceGroup: pins-rg-prototypes-dev
+  tagPrefix: prototype
