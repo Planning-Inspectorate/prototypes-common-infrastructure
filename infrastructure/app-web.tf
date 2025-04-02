@@ -17,7 +17,8 @@ resource "azurerm_linux_web_app" "web_app" {
   app_settings = {
     NODE_ENV                 = "production"
     PASSWORD                 = each.value["password"]
-    WEBSITE_RUN_FROM_PACKAGE = 1
+    WEBSITE_RUN_FROM_PACKAGE = 0
+    PORT                     = 8080
   }
 
   resource_group_name = azurerm_resource_group.primary.name
@@ -36,11 +37,12 @@ resource "azurerm_linux_web_app" "web_app" {
   }
 
   site_config {
-    always_on     = true
-    http2_enabled = true
+    always_on        = true
+    http2_enabled    = true
+    app_command_line = "node node_modules/govuk-prototype-kit/bin/cli start"
 
     application_stack {
-      node_version = "22-lts"
+      node_version = "20-lts"
     }
 
     ip_restriction_default_action = "Deny"
