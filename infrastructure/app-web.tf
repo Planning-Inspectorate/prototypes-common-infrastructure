@@ -39,7 +39,7 @@ resource "azurerm_linux_web_app" "web_app" {
   site_config {
     always_on        = true
     http2_enabled    = true
-    app_command_line = "node node_modules/govuk-prototype-kit/bin/cli start"
+    app_command_line = "npm ci && npm run start"
 
     application_stack {
       node_version = "20-lts"
