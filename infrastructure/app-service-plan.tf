@@ -7,7 +7,7 @@ resource "azurerm_service_plan" "apps" {
   location            = module.primary_region.location
 
   os_type  = "Linux"
-  sku_name = "B1"
+  sku_name = "P0v3"
 
   tags = local.tags
 }
