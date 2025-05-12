@@ -45,7 +45,7 @@ resource "azurerm_linux_web_app" "web_app" {
       node_version = "20-lts"
     }
 
-    ip_restriction_default_action = "Deny"
+    ip_restriction_default_action = "Allow"
   }
 
   tags = local.tags
