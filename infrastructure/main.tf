@@ -8,7 +8,7 @@ resource "azurerm_resource_group" "primary" {
 module "primary_region" {
   #checkov:skip=CKV_TF_1: TODO: external location download
   source  = "claranet/regions/azurerm"
-  version = "7.3.1"
+  version = "8.0.2"
 
   azure_region = local.primary_location
 }
