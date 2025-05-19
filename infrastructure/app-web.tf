@@ -19,7 +19,7 @@ resource "azurerm_linux_web_app" "web_app" {
     PASSWORD                            = each.value["password"]
     WEBSITE_RUN_FROM_PACKAGE            = 0
     PORT                                = 8080
-    WEBSITES_CONTAINER_START_TIME_LIMIT = 5000
+    WEBSITES_CONTAINER_START_TIME_LIMIT = 600
   }
 
   resource_group_name = azurerm_resource_group.primary.name
