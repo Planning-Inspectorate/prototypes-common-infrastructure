@@ -7,28 +7,33 @@ locals {
   #App_services
   app_services = {
     appeals_front_office = {
-      name     = "pins-app-prototype-appeals-front-office"
-      password = local.key_vault_refs["appeals-front-office"]
+      name       = "pins-app-prototype-appeals-front-office"
+      password   = local.key_vault_refs["appeals-front-office"]
+      image_name = "prototypes/applications-front-office"
     }
 
     appelas_back_office = {
-      name     = "pins-app-prototype-appeals-back-office"
-      password = local.key_vault_refs["appeals-back-office"]
+      name       = "pins-app-prototype-appeals-back-office"
+      password   = local.key_vault_refs["appeals-back-office"]
+      image_name = "prototypes/appeals-back-office"
     }
 
     applications_front_office = {
-      name     = "pins-app-prototype-applications-front-office"
-      password = local.key_vault_refs["applications-front-office"]
+      name       = "pins-app-prototype-applications-front-office"
+      password   = local.key_vault_refs["applications-front-office"]
+      image_name = "prototypes/applications-front-office"
     }
 
     applications_back_office = {
-      name     = "pins-app-prototype-applications-back-office"
-      password = local.key_vault_refs["applications-back-office"]
+      name       = "pins-app-prototype-applications-back-office"
+      password   = local.key_vault_refs["applications-back-office"]
+      image_name = "prototypes/applications-back-office"
     }
 
     crown_dev = {
-      name     = "pins-app-prototype-crown-dev"
-      password = local.key_vault_refs["crown-dev"]
+      name       = "pins-app-prototype-crown-dev"
+      password   = local.key_vault_refs["crown-dev"]
+      image_name = "prototypes/crown-dev"
     }
   }
 
