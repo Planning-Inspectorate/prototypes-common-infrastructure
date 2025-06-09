@@ -30,7 +30,7 @@ resources:
       type: github
       endpoint: Planning-Inspectorate
       name: Planning-Inspectorate/common-pipeline-templates
-      ref: refs/tags/release/3.21.1
+      ref: refs/tags/release/3.22.2
 
 jobs:
   - job: purge
@@ -44,6 +44,7 @@ jobs:
       - template: steps/azure_container_registry_purge.yml@templates
         parameters:
           dryRun: ${{ parameters.dryRun }}
+          hasStagingSlots: false
           keepLastXDays: ${{ parameters.keepLastXDays }}
           repositories: "['prototypes/appeals-back-office', 'prototypes/appeals-front-office', 'prototypes/applications-back-office', 'prototypes/applications-front-office', 'prototypes/crown-dev']"
           resourceGroupsBySub: >
