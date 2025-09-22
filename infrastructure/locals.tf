@@ -35,6 +35,12 @@ locals {
       password   = local.key_vault_refs["crown-dev"]
       image_name = "prototypes/crown-dev"
     }
+
+    design_patterns = {
+      name       = "pins-app-prototype-design-patterns"
+      password   = local.key_vault_refs["design-patterns"]
+      image_name = "prototypes/design-patterns"
+    }
   }
 
   secrets = [
@@ -43,6 +49,7 @@ locals {
     "applications-front-office",
     "applications-back-office",
     "crown-dev",
+    "design-patterns",
   ]
 
   key_vault_refs = merge(
