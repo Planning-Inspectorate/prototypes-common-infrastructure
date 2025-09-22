@@ -30,6 +30,12 @@ locals {
       image_name = "prototypes/applications-back-office"
     }
 
+    applications_dco_portal = {
+      name       = "pins-app-prototype-applications-dco-portal"
+      password   = local.key_vault_refs["applications-dco-portal"]
+      image_name = "prototypes/applications-dco-portal"
+    }
+
     crown_dev = {
       name       = "pins-app-prototype-crown-dev"
       password   = local.key_vault_refs["crown-dev"]
@@ -48,6 +54,7 @@ locals {
     "appeals-back-office",
     "applications-front-office",
     "applications-back-office",
+    "applications-dco-portal",
     "crown-dev",
     "design-patterns",
   ]
