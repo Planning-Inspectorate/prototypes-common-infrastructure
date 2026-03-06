@@ -10,3 +10,10 @@ variable "tags" {
   default     = {}
 }
 
+variable "vnet_config" {
+  description = "VNet configuration"
+  type = object({
+    address_space                       = string
+    main_subnet_address_space           = string
+  })
+}
