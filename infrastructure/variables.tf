@@ -13,9 +13,9 @@ variable "tags" {
 variable "tooling_config" {
   description = "Config for the tooling subscription resources"
   type = object({
-    network_name            = string
-    network_rg              = string
-    subscription_id         = string
+    network_name    = string
+    network_rg      = string
+    subscription_id = string
   })
 }
 
