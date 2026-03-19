@@ -10,3 +10,19 @@ variable "tags" {
   default     = {}
 }
 
+variable "tooling_config" {
+  description = "Config for the tooling subscription resources"
+  type = object({
+    network_name    = string
+    network_rg      = string
+    subscription_id = string
+  })
+}
+
+variable "vnet_config" {
+  description = "VNet configuration"
+  type = object({
+    address_space             = string
+    main_subnet_address_space = string
+  })
+}
