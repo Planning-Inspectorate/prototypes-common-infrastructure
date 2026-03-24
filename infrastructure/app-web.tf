@@ -48,6 +48,8 @@ resource "azurerm_linux_web_app" "web_app" {
     ip_restriction_default_action = "Allow"
   }
 
+  virtual_network_subnet_id = azurerm_subnet.app_integration.id
+
   tags = local.tags
 
   lifecycle {
