@@ -13,7 +13,6 @@ resource "azurerm_linux_web_app" "web_app" {
   for_each = local.app_services
   name     = each.value["name"]
 
-
   app_settings = {
     NODE_ENV = "production"
     PASSWORD = each.value["password"]
@@ -39,6 +38,7 @@ resource "azurerm_linux_web_app" "web_app" {
     always_on                               = true
     http2_enabled                           = true
     container_registry_use_managed_identity = true
+    vnet_route_all_enabled                  = true
 
     application_stack {
       docker_image_name   = "${each.value["image_name"]}:main"

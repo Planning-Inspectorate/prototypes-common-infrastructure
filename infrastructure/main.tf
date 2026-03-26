@@ -25,10 +25,10 @@ resource "azurerm_key_vault" "main" {
   public_network_access_enabled = false
   sku_name                      = "standard"
 
-  # network_acls {
-  #   bypass         = "AzureServices"
-  #   default_action = "Allow"
-  # }
+  network_acls {
+    bypass         = "AzureServices"
+    default_action = "Allow"
+  }
 
   tags = local.tags
 }
