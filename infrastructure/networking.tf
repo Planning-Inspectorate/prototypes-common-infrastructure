@@ -24,7 +24,7 @@ resource "azurerm_subnet" "app_integration" {
   address_prefixes     = [var.vnet_config.app_integration_subnet_address_space]
 
   delegation {
-    name = "appservice"
+    name = "delegation"
     service_delegation {
       name    = "Microsoft.Web/serverFarms"
       actions = ["Microsoft.Network/virtualNetworks/subnets/action"]
