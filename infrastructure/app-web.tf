@@ -1,13 +1,8 @@
 resource "azurerm_linux_web_app" "web_app" {
-  #checkov:skip=CKV_AZURE_13: App Service authentication may not be required
-  #checkov:skip=CKV_AZURE_17: Disabling FTP(S) to be tested
-  #checkov:skip=CKV_AZURE_78: TLS mutual authentication may not be required
-  #checkov:skip=CKV_AZURE_88: Azure Files mount may not be required
-  #checkov:skip=CKV_AZURE_213: App Service health check may not be required
-  #checkov:skip=CKV_AZURE_222: Ensure that Azure Web App public network access is disabled
-  #checkov:skip=CKV_AZURE_63: Azure App service HTTP logging is disabled
-  #checkov:skip=CKV_AZURE_65: App service disables detailed error messages
-  #checkov:skip=CKV_AZURE_66: App service does not enable failed request tracing
+  #checkov:skip=CKV_AZURE_13: App Service authentication not required for prototypes
+  #checkov:skip=CKV_AZURE_78: TLS mutual authentication not required for prototypes
+  #checkov:skip=CKV_AZURE_88: Azure Files mount not required
+  #checkov:skip=CKV_AZURE_222: Public network access required for prototypes
 
   #Loops
   for_each = local.app_services
@@ -39,6 +34,8 @@ resource "azurerm_linux_web_app" "web_app" {
     http2_enabled                           = true
     container_registry_use_managed_identity = true
     vnet_route_all_enabled                  = true
+    ftps_state                              = "Disabled"
+    health_check_path                       = "/health"
 
     application_stack {
       docker_image_name   = "${each.value["image_name"]}:main"
@@ -46,6 +43,18 @@ resource "azurerm_linux_web_app" "web_app" {
     }
 
     ip_restriction_default_action = "Allow"
+  }
+
+  logs {
+    detailed_error_messages = false
+    failed_request_tracing  = false
+
+    http_logs {
+      file_system {
+        retention_in_days = 4
+        retention_in_mb   = 25
+      }
+    }
   }
 
   virtual_network_subnet_id = azurerm_subnet.app_integration.id
