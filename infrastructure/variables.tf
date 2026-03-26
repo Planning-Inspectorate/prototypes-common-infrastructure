@@ -22,7 +22,8 @@ variable "tooling_config" {
 variable "vnet_config" {
   description = "VNet configuration"
   type = object({
-    address_space             = string
-    main_subnet_address_space = string
+    address_space                        = string
+    main_subnet_address_space            = string
+    app_integration_subnet_address_space = string
   })
 }

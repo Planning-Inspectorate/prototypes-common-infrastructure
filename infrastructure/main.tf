@@ -30,6 +30,11 @@ resource "azurerm_key_vault" "main" {
     default_action = "Deny"
   }
 
+  # Disable certificate lifecycle contact checks
+  lifecycle {
+    ignore_changes = [contact]
+  }
+
   tags = local.tags
 }
 
