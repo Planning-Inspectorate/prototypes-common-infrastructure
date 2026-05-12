@@ -16,6 +16,22 @@ resource "azurerm_subnet" "main" {
   private_endpoint_network_policies = "Enabled"
 }
 
+resource "azurerm_subnet" "app_integration" {
+  #checkov:skip=CKV2_AZURE_31: "Ensure VNET subnet is configured with a Network Security Group (NSG)"
+  name                 = "${local.org}-snet-apps-${local.resource_suffix}"
+  resource_group_name  = azurerm_resource_group.primary.name
+  virtual_network_name = azurerm_virtual_network.main.name
+  address_prefixes     = [var.vnet_config.app_integration_subnet_address_space]
+
+  delegation {
+    name = "delegation"
+    service_delegation {
+      name    = "Microsoft.Web/serverFarms"
+      actions = ["Microsoft.Network/virtualNetworks/subnets/action"]
+    }
+  }
+}
+
 resource "azurerm_private_dns_zone_virtual_network_link" "keyvault" {
   name                  = "${local.org}-vnetlink-keyvault-${local.resource_suffix}"
   resource_group_name   = var.tooling_config.network_rg
