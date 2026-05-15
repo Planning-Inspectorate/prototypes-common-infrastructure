@@ -57,6 +57,11 @@ locals {
       password   = local.key_vault_refs["mpesc"]
       image_name = "prototypes/mpesc"
     }
+    s62a = {
+      name       = "pins-app-prototype-s62a"
+      password   = local.key_vault_refs["s62a"]
+      image_name = "prototypes/s62a"
+    }
   }
 
   secrets = [
@@ -68,7 +73,8 @@ locals {
     "crown-dev",
     "design-patterns",
     "local-plans",
-    "mpesc"
+    "mpesc",
+    "s62a"
   ]
 
   key_vault_refs = merge(
