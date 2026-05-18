@@ -30,6 +30,7 @@ resource "azurerm_linux_web_app" "web_app" {
   client_certificate_enabled    = false
   https_only                    = true
   public_network_access_enabled = true
+  virtual_network_subnet_id     = azurerm_subnet.apps.id
 
   identity {
     type = "SystemAssigned"
