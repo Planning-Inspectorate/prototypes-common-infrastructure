@@ -72,7 +72,7 @@ resource "azurerm_private_endpoint" "keyvault" {
     name                           = "${local.org}-psc-keyvault-${local.resource_suffix}"
     private_connection_resource_id = azurerm_key_vault.main.id
     subresource_names              = ["vault"]
-    is_manual_connection           = false
+    is_manual_connection           = true
   }
 
   tags = local.tags
