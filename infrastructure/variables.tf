@@ -8,6 +8,7 @@ variable "rrtm" {
 
   description = "Config for the auth settings of relevant-reps-topic-modelling"
   type = object({
+    ml_workspace_rg = string
     auth_config = object({
       auth_client_id       = string
       allowed_applications = string
@@ -17,6 +18,9 @@ variable "rrtm" {
       st_name             = string
       resource_group_name = string
       container_name      = string
+    })
+    rbac = object({
+      ml_workspace_name = string
     })
   })
 }

@@ -14,6 +14,11 @@ data "azurerm_private_dns_zone" "keyvault" {
   provider = azurerm.tooling
 }
 
+data "azurerm_machine_learning_workspace" "ml_workspace" {
+  name                = var.rrtm.rbac.ml_workspace_name
+  resource_group_name = var.rrtm.ml_workspace_rg
+}
+
 data "azurerm_storage_account" "ml_storage" {
   name                = var.rrtm.st_account.st_name
   resource_group_name = var.rrtm.st_account.resource_group_name

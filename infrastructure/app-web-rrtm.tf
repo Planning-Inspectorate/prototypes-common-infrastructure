@@ -54,9 +54,13 @@ resource "azurerm_linux_web_app" "web_app_rrtm" {
   }
 
   app_settings = {
-    NODE_ENV                       = "production"
-    PORT                           = 8050
+    NODE_ENV              = "production"
+    PORT                  = 8050
+    AZURE_SUBSCRIPTION_ID = data.azurerm_client_config.current.subscription_id
+
+    #Zip Deployment
     SCM_DO_BUILD_DURING_DEPLOYMENT = true
+    WEBSITE_RUN_FROM_PACKAGE       = 0
 
     #Auth
     MICROSOFT_PROVIDER_AUTHENTICATION_SECRET = local.key_vault_refs["relevant-reps-topic-modelling-auth-secret"]
@@ -69,12 +73,12 @@ resource "azurerm_linux_web_app" "web_app_rrtm" {
     http2_enabled                           = true
     container_registry_use_managed_identity = true
 
-    app_command_line = "python pipelines/norwich_tilbury/classifier/launch_dashboard.py"
+    app_command_line = "python -m pipelines.norwich_tilbury.classifier.launch_dashboard --overwrite-data"
 
     ip_restriction_default_action = "Allow"
 
     application_stack {
-      python_version = "3.14"
+      python_version = "3.12"
     }
   }
 
@@ -89,16 +93,21 @@ resource "azurerm_linux_web_app" "web_app_rrtm" {
   }
 }
 
-## RBAC for secrets
+## RBAC
 resource "azurerm_role_assignment" "rrtm_secrets_user" {
   scope                = azurerm_key_vault.main.id
   role_definition_name = "Key Vault Secrets User"
   principal_id         = azurerm_linux_web_app.web_app_rrtm.identity[0].principal_id
 }
 
-#RBAC for storage account
 resource "azurerm_role_assignment" "rrtm_storage_blob_data_reader" {
   scope                = "${data.azurerm_storage_account.ml_storage.id}/blobServices/default/containers/${var.rrtm.st_account.container_name}"
   role_definition_name = "Storage Blob Data Reader"
+  principal_id         = azurerm_linux_web_app.web_app_rrtm.identity[0].principal_id
+}
+
+resource "azurerm_role_assignment" "ml_reader" {
+  scope                = data.azurerm_machine_learning_workspace.ml_workspace.id
+  role_definition_name = "Reader"
   principal_id         = azurerm_linux_web_app.web_app_rrtm.identity[0].principal_id
 }
