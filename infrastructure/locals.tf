@@ -74,7 +74,8 @@ locals {
     "design-patterns",
     "local-plans",
     "mpesc",
-    "s62a"
+    "s62a",
+    "relevant-reps-topic-modelling-auth-secret"
   ]
 
   key_vault_refs = merge(

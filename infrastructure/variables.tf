@@ -4,6 +4,23 @@ variable "environment" {
   default     = "dev"
 }
 
+variable "rrtm" {
+
+  description = "Config for the auth settings of relevant-reps-topic-modelling"
+  type = object({
+    auth_config = object({
+      auth_client_id       = string
+      allowed_applications = string
+      allowed_groups       = list(string)
+    })
+    st_account = object({
+      st_name             = string
+      resource_group_name = string
+      container_name      = string
+    })
+  })
+}
+
 variable "tags" {
   description = "A collection of tags to assign to taggable resources"
   type        = map(string)
