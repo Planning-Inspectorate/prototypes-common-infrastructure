@@ -106,6 +106,10 @@ resource "azurerm_role_assignment" "rrtm_storage_blob_data_reader" {
   principal_id         = azurerm_linux_web_app.web_app_rrtm.identity[0].principal_id
 }
 
+import {
+  id = "4bade2c440024a209d9f565db1eca614"
+  to = azurerm_role_assignment.ml_reader
+}
 resource "azurerm_role_assignment" "ml_reader" {
   scope                = data.azurerm_machine_learning_workspace.ml_workspace.id
   role_definition_name = "Reader"
