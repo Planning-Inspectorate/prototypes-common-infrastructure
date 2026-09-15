@@ -1,7 +1,50 @@
+variable "alerts_enabled" {
+  description = "Whether to enable Azure Monitor alerts"
+  type        = string
+  default     = true
+}
+
+variable "apps_config" {
+  description = "Config for the apps"
+  type = object({
+    app_service_plan = object({
+      sku                      = string
+      per_site_scaling_enabled = bool
+      worker_count             = number
+      zone_balancing_enabled   = bool
+    })
+
+    functions_node_version     = number
+    functions_service_plan_sku = string
+    node_environment           = string
+    private_endpoint_enabled   = bool
+  })
+}
+
+variable "common_config" {
+  description = "Config for the common resources, such as action groups"
+  type = object({
+    resource_group_name = string
+    action_group_names = object({
+      iap      = string
+      its      = string
+      info_sec = string
+    })
+  })
+}
+
 variable "environment" {
   description = "The name of the environment in which resources will be deployed"
   type        = string
   default     = "dev"
+}
+
+variable "monitoring_config" {
+  description = "Config for monitoring"
+  type = object({
+    app_insights_web_test_enabled = bool
+    log_daily_cap                 = number
+  })
 }
 
 variable "rrtm" {
