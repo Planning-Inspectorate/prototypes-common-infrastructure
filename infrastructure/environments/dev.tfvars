@@ -1,4 +1,48 @@
+apps_config = {
+  app_service_plan = {
+    sku                      = "P0v3"
+    per_site_scaling_enabled = false
+    worker_count             = 1
+    zone_balancing_enabled   = false
+  }
+
+  auth = {
+    client_id                = "1625a9b6-a214-4fea-a683-e17f7099e964" # idas reps poc - dev
+    group_application_access = "ab2e4b5a-4807-4c81-8ce0-3eba310f7cc6" # idas reps poc - app access - dev 
+    # groups = {
+    #   inspectors    = ""
+    #   team_leads    = ""
+    #   national_team = ""
+    #   api_inspector_groups = []
+    # }
+  }
+
+  functions_node_version     = 22
+  functions_service_plan_sku = "P0v3"
+
+  logging = {
+    level = "info"
+  }
+
+  node_environment         = "development"
+  private_endpoint_enabled = true
+}
+
+common_config = {
+  resource_group_name = "pins-rg-common-dev-ukw-001"
+  action_group_names = {
+    iap      = "pins-ag-odt-iap-dev"
+    its      = "pins-ag-odt-its-dev"
+    info_sec = "pins-ag-odt-info-sec-dev"
+  }
+}
+
 environment = "dev"
+
+monitoring_config = {
+  app_insights_web_test_enabled = false
+  log_daily_cap                 = 0.1
+}
 
 rrtm = {
   ml_workspace_rg = "pins-rg-azure-ml-dev"
