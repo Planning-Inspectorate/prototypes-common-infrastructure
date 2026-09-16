@@ -91,3 +91,9 @@ variable "vnet_config" {
     apps_subnet_address_space = string
   })
 }
+
+variable "function_python_version" {
+  default     = "3.10"
+  description = "Python version for the function app"
+  type        = string
+}

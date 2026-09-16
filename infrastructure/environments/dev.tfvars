@@ -6,6 +6,10 @@ apps_config = {
     zone_balancing_enabled   = false
   }
 
+  node_environment           = "development"
+  private_endpoint_enabled   = true
+  functions_node_version     = 22
+  functions_service_plan_sku = "P0v3"
   auth = {
     client_id                = "1625a9b6-a214-4fea-a683-e17f7099e964" # idas reps poc - dev
     group_application_access = "ab2e4b5a-4807-4c81-8ce0-3eba310f7cc6" # idas reps poc - app access - dev 
@@ -17,15 +21,9 @@ apps_config = {
     # }
   }
 
-  functions_node_version     = 22
-  functions_service_plan_sku = "P0v3"
-
   logging = {
     level = "info"
   }
-
-  node_environment         = "development"
-  private_endpoint_enabled = true
 }
 
 common_config = {

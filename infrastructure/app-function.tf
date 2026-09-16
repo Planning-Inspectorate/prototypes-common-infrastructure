@@ -1,43 +1,42 @@
-module "function_idas" {
-  #checkov:skip=CKV_TF_1: Use of commit hash are not required for our Terraform modules
-  source = "github.com/Planning-Inspectorate/infrastructure-modules.git//modules/node-function-app?ref=1.57"
+resource "azurerm_linux_function_app" "function_app" {
+  name                          = "pins-func-${local.service_name}-idas-python-${var.environment}"
+  location                      = module.primary_region.location
+  resource_group_name           = azurerm_resource_group.primary.name
+  service_plan_id               = azurerm_service_plan.functions.id
+  storage_account_name          = azurerm_storage_account.functions.name
+  storage_account_access_key    = azurerm_storage_account.functions.primary_access_key
+  https_only                    = true
+  public_network_access_enabled = false
 
-  resource_group_name = azurerm_resource_group.primary.name
-  location            = module.primary_region.location
-
-  # naming
-  app_name        = "idas-reps-poc"
-  resource_suffix = var.environment
-  service_name    = local.service_name
-  tags            = local.tags
-
-  # service plan
-  app_service_plan_id = azurerm_service_plan.functions.id
-
-  # storage
-  function_apps_storage_account            = azurerm_storage_account.functions.name
-  function_apps_storage_account_access_key = azurerm_storage_account.functions.primary_access_key
-
-  # networking
-  integration_subnet_id      = azurerm_subnet.apps.id
-  outbound_vnet_connectivity = true
-  inbound_vnet_connectivity  = true
-  private_endpoint = {
-    private_dns_zone_id = data.azurerm_private_dns_zone.app_service.id
-    subnet_id           = azurerm_subnet.main.id
+  app_settings = {
+    FUNCTIONS_WORKER_RUNTIME = "python"
+    WEBSITE_RUN_FROM_PACKAGE = 0
+    
   }
 
-  # monitoring
-  action_group_ids            = local.action_group_ids
-  app_insights_instrument_key = azurerm_application_insights.main.instrumentation_key
-  log_analytics_workspace_id  = azurerm_log_analytics_workspace.main.id
-  monitoring_alerts_enabled   = var.alerts_enabled
+  identity {
+    type = "SystemAssigned"
+  }
 
-  # settings
-  function_node_version = var.apps_config.functions_node_version
-  app_settings = {
-    # Function env variables
-    NODE_ENV = var.apps_config.node_environment
+  site_config {
+    always_on     = true
+    http2_enabled = true
+
+    application_stack {
+      python_version = var.function_python_version
+    }
+
+    application_insights_key = azurerm_application_insights.main.instrumentation_key
+  }
+
+  tags = local.tags
+
+  virtual_network_subnet_id = azurerm_subnet.apps.id
+
+  lifecycle {
+    ignore_changes = [
+      tags
+    ]
   }
 }
 
@@ -65,6 +64,27 @@ resource "azurerm_storage_account" "functions" {
   network_rules {
     default_action = "Deny"
     bypass         = ["AzureServices"]
+  }
+
+  tags = local.tags
+}
+
+resource "azurerm_private_endpoint" "function_app_pe" {
+  name                = "${local.org}-pe-${local.service_name}-idas-python-${var.environment}"
+  location            = module.primary_region.location
+  resource_group_name = azurerm_resource_group.primary.name
+  subnet_id           = azurerm_subnet.main.id
+
+  private_dns_zone_group {
+    name                 = "${local.org}-pdns-${local.service_name}-funcapp-python-${var.environment}"
+    private_dns_zone_ids = [data.azurerm_private_dns_zone.app_service.id]
+  }
+
+  private_service_connection {
+    name                           = "${local.org}-psc-funcapp-python-${var.environment}"
+    private_connection_resource_id = azurerm_linux_function_app.function_app.id
+    subresource_names              = ["sites"]
+    is_manual_connection           = false
   }
 
   tags = local.tags
