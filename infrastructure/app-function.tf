@@ -9,9 +9,8 @@ resource "azurerm_linux_function_app" "function_app" {
   public_network_access_enabled = false
 
   app_settings = {
-    FUNCTIONS_WORKER_RUNTIME = "python"
-    WEBSITE_RUN_FROM_PACKAGE = 0
-    
+    FUNCTIONS_WORKER_RUNTIME       = "python"
+    SCM_DO_BUILD_DURING_DEPLOYMENT = true
   }
 
   identity {
