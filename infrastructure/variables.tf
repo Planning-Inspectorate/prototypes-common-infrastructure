@@ -93,7 +93,7 @@ variable "vnet_config" {
 }
 
 variable "function_python_version" {
-  default     = "3.10"
+  default     = "3.13"
   description = "Python version for the function app"
   type        = string
 }
