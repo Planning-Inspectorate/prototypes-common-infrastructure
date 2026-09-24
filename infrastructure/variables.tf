@@ -1,9 +1,3 @@
-variable "alerts_enabled" {
-  description = "Whether to enable Azure Monitor alerts"
-  type        = string
-  default     = true
-}
-
 variable "apps_config" {
   description = "Config for the apps"
   type = object({
@@ -18,18 +12,6 @@ variable "apps_config" {
     functions_service_plan_sku = string
     node_environment           = string
     private_endpoint_enabled   = bool
-  })
-}
-
-variable "common_config" {
-  description = "Config for the common resources, such as action groups"
-  type = object({
-    resource_group_name = string
-    action_group_names = object({
-      iap      = string
-      its      = string
-      info_sec = string
-    })
   })
 }
 
@@ -90,4 +72,10 @@ variable "vnet_config" {
     main_subnet_address_space = string
     apps_subnet_address_space = string
   })
+}
+
+variable "function_python_version" {
+  default     = "3.13"
+  description = "Python version for the function app"
+  type        = string
 }
