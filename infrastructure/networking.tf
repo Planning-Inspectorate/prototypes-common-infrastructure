@@ -65,3 +65,13 @@ resource "azurerm_private_dns_zone_virtual_network_link" "keyvault" {
 
   provider = azurerm.tooling
 }
+
+resource "azurerm_private_dns_zone_virtual_network_link" "storage" {
+  name                = "${local.org}-vnetlink-storage-${local.resource_suffix}"
+  private_dns_zone_id = data.azurerm_private_dns_zone.storage.id
+  virtual_network_id  = azurerm_virtual_network.main.id
+
+  tags = local.tags
+
+  provider = azurerm.tooling
+}

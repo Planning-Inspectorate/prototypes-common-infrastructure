@@ -84,14 +84,6 @@ locals {
     },
   )
 
-  action_group_ids = {
-    tech            = azurerm_monitor_action_group.idas_reps_poc_tech.id
-    service_manager = azurerm_monitor_action_group.idas_reps_poc_service_manager.id
-    iap             = data.azurerm_monitor_action_group.common["iap"].id,
-    its             = data.azurerm_monitor_action_group.common["its"].id,
-    info_sec        = data.azurerm_monitor_action_group.common["info_sec"].id
-  }
-
   tags = merge(
     var.tags,
     {
