@@ -9,7 +9,7 @@ locals {
     appeals_front_office = {
       name       = "pins-app-prototype-appeals-front-office"
       password   = local.key_vault_refs["appeals-front-office"]
-      image_name = "prototypes/applications-front-office"
+      image_name = "prototypes/appeals-front-office"
     }
 
     appelas_back_office = {
@@ -47,6 +47,11 @@ locals {
       password   = local.key_vault_refs["design-patterns"]
       image_name = "prototypes/design-patterns"
     }
+    inspector_service = {
+      name       = "pins-app-prototype-inspector-service"
+      password   = local.key_vault_refs["inspector-service"]
+      image_name = "prototypes/inspector-service"
+    }
     local_plans = {
       name       = "pins-app-prototype-local-plans"
       password   = local.key_vault_refs["local-plans"]
@@ -72,6 +77,7 @@ locals {
     "applications-dco-portal",
     "crown-dev",
     "design-patterns",
+    "inspector-service",
     "local-plans",
     "mpesc",
     "s62a",
